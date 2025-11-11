@@ -3,7 +3,11 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -21,6 +25,9 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'library_id',
+        'role',
+        'status',
     ];
 
     /**
@@ -44,5 +51,35 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function scopeManagers(Builder $query): Builder
+    {
+        return $query->where('role', 'manager');
+    }
+
+    public function scopeBorrowers(Builder $query): Builder
+    {
+        return $query->where('role', 'borrower');
+    }
+
+    public function logins(): HasMany
+    {
+        return $this->hasMany(Login::class);
+    }
+
+    public function borrowings(): HasMany
+    {
+        return $this->hasMany(Borrowing::class);
+    }
+
+    public function reviews(): HasMany
+    {
+        return $this->hasMany(Review::class);
+    }
+
+    public function library(): BelongsTo
+    {
+        return $this->belongsTo(Library::class);
     }
 }
