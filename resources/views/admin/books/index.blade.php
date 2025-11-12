@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Dashboard') }}
+            {{ __('Books') }}
         </h2>
     </x-slot>
 
@@ -11,25 +11,17 @@
                 <div class="p-6 text-gray-900 dark:text-gray-100">
 
                     <main class="max-w-7xl mx-auto py-2">
-                        <form class="w-1/3 rounded-sm">
-                            <label for="search" class="sr-only">Search</label>
-                            <div class="relative w-full rounded-md shadow-sm">
-                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                    <x-icons.search />
-                                </div>
-                                <x-text-input id="search" type="search" name="search"
-                                    class="block w-full pl-10 sm:text-sm sm:leading-5 border border-gray-300 rounded-md bg-gray-50"
-                                    name="search" :value="request('search')" placeholder="Search..."
-                                    autocomplete="search" />
-                            </div>
-                        </form>
+                        <div class="flex justify-end">
+                            <x-search-form action="{{ route('admin.books.index') }}" placeholder="Search books..." />
+                        </div>
+
 
                         <div class="mt-8 flex flex-col">
                             <div class="-my-2 py-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
                                 <div class="align-middle inline-block min-w-full shadow overflow-hidden sm:rounded-lg">
-                                    <table class="min-w-full">
+                                    <x-table>
                                         <x-table.thead>
-                                            <x-table.th column="Name" />
+                                            <x-table.th field="name" column="Name" />
                                             <x-table.th column="Email" />
                                             <x-table.th column="Company" />
                                             <x-table.th />
@@ -46,7 +38,7 @@
                                             </tr>
                                             {{-- @endforeach --}}
                                         </tbody>
-                                    </table>
+                                    </x-table>
                                     {{-- {{ $users->withQueryString()->links() }} --}}
                                 </div>
                             </div>
