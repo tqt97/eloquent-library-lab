@@ -1,6 +1,6 @@
 @props(['size' => 5])
 @php
-    $class = 'h-' . $size . ' w-' . $size . ' text-gray-500';
+    $class = 'size-' . $size .' text-gray-500';
 @endphp
 <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
     viewBox="0 0 24 24" {{ $attributes->merge(['class' => $class]) }}>

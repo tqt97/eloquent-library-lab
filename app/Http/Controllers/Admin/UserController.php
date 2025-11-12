@@ -26,6 +26,7 @@ class UserController extends Controller
             //     'last_login_at' => 'datetime',
             // ])
             ->paginate();
+
         return view('admin.users.index', compact('users'));
     }
 

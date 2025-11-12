@@ -21,25 +21,49 @@
                                 <div class="align-middle inline-block min-w-full shadow overflow-hidden sm:rounded-lg">
                                     <x-table>
                                         <x-table.thead>
-                                            <x-table.th field="name" column="Name" />
-                                            <x-table.th column="Email" />
-                                            <x-table.th column="Company" />
+                                            <x-table.th column="Isbn" />
+                                            <x-table.th field="title" column="Information" />
+                                            <x-table.th column="Status" class="text-center" />
+                                            <x-table.th column="Library" />
                                             <x-table.th />
                                         </x-table.thead>
                                         <tbody>
-                                            {{-- @foreach ($users as $user) --}}
-                                            <tr class="bg-white">
-                                                <x-table.td value="{{ $user->name ?? 'name' }}" />
-                                                <x-table.td value="{{ $user->email ?? 'email' }}" />
-                                                <x-table.td value="{{ $user->company->name ?? 'company name' }}" />
-                                                <x-table.td class="text-right">
-                                                    <a href="" class="text-indigo-600 hover:text-indigo-900">Edit</a>
-                                                </x-table.td>
-                                            </tr>
-                                            {{-- @endforeach --}}
+                                            @forelse ($books as $book)
+                                                <x-table.tr>
+                                                    <x-table.td value="{{ $book->isbn  }}" />
+                                                    <x-table.td>
+                                                        <p class="font-bold text-gray-950">{{ $book->title }}</p>
+                                                        <p class="text-xs text-gray-800">Author:
+                                                            <strong>{{ $book->authors->pluck('name')->implode(', ') }}</strong>
+                                                        </p>
+                                                        <p class="text-xs text-gray-800">Categories:
+                                                            <strong>{{ $book->categories->pluck('name')->implode(', ') }}</strong>
+                                                        </p>
+                                                        <p class="text-xs text-gray-800">Published in
+                                                            <strong>{{ $book->published_year }}</strong> by
+                                                            <strong>{{ $book->publisher->name }}</strong>
+                                                        </p>
+                                                    </x-table.td>
+                                                    <x-table.td>
+                                                        <div class="text-center">
+                                                            <p>{{ $book->stock }}</p>
+                                                            <x-badge :text="$book->status"
+                                                                :variant="$book->status === 'available' ? 'success' : 'danger'" />
+                                                        </div>
+                                                    </x-table.td>
+                                                    <x-table.td value="{{ $book->library->name  }}" />
+                                                    <x-table.td class="text-right">
+                                                        <a href="" class="text-indigo-600 hover:text-indigo-900">Edit</a>
+                                                    </x-table.td>
+                                                </x-table.tr>
+                                            @empty
+                                                <x-table.empty colspan="5" message="No books found" icon="book" />
+                                            @endforelse
                                         </tbody>
                                     </x-table>
-                                    {{-- {{ $users->withQueryString()->links() }} --}}
+
+                                    <x-table.pagination :paginator="$books" />
+
                                 </div>
                             </div>
                         </div>

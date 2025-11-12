@@ -24,9 +24,12 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
+        $first_name = fake()->firstName();
+
         return [
-            'name' => $name = fake()->name(),
-            'email' => Str::slug($name).'+'.Str::random(5).'@example.com',
+            'first_name' => $first_name,
+            'last_name' => fake()->lastName(),
+            'email' => Str::slug($first_name).'+'.Str::random(5).'@example.com',
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
             'library_id' => Library::factory(),

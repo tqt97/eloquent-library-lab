@@ -12,7 +12,7 @@
 
                     <main class="max-w-7xl mx-auto py-2">
                         <div class="flex justify-end">
-                            <x-search-form action="{{ route('admin.books.index') }}" placeholder="Search books..." />
+                            <x-search-form action="{{ route('admin.users.index') }}" placeholder="Search users..." />
                         </div>
 
                         <div class="mt-8 flex flex-col">
@@ -20,17 +20,17 @@
                                 <div class="align-middle inline-block min-w-full shadow overflow-hidden sm:rounded-lg">
                                     <x-table>
                                         <x-table.thead>
-                                            <x-table.th field="id" column="ID" />
-                                            <x-table.th column="Name" />
+                                            <x-table.th column="First Name" />
+                                            <x-table.th column="Last Name" />
                                             <x-table.th column="Email" />
                                             <x-table.th column="Last login" />
-                                            <x-table.th align="center" />
+                                            <x-table.th />
                                         </x-table.thead>
                                         <tbody>
                                             @forelse ($users as $user)
                                                 <x-table.tr>
-                                                    <x-table.td value="{{ $user->id  }}" />
-                                                    <x-table.td value="{{ $user->name }}" />
+                                                    <x-table.td value="{{ $user->first_name  }}" />
+                                                    <x-table.td value="{{ $user->last_name  }}" />
                                                     <x-table.td value="{{ $user->email  }}" />
                                                     <x-table.td
                                                         value="{{ $user->logins()->latest()->first()?->created_at ?? '-'  }}" />
@@ -39,7 +39,7 @@
                                                     </x-table.td>
                                                 </x-table.tr>
                                             @empty
-                                                <x-table.empty colspan="5" message="No users found" icon="search" />
+                                                <x-table.empty colspan="5" message="No users found" icon="user" />
                                             @endforelse
                                         </tbody>
                                     </x-table>
