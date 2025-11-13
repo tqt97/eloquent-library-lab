@@ -100,4 +100,16 @@ class User extends Authenticatable
                 'last_login_at' => 'datetime',
             ]);
     }
+
+    /**
+     * Returns the last login time for the user, formatted for humans.
+     *
+     * If the user has never logged in, an empty string is returned.
+     *
+     * @return string
+     */
+    public function getLastLoginAtForHumansAttribute(): string
+    {
+        return $this->last_login_at?->diffForHumans() ?? '-';
+    }
 }
