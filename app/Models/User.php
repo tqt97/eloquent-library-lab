@@ -82,4 +82,22 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Library::class);
     }
+
+    /**
+     * Scope to add last_login_at column to user
+     *
+     * Using subquery to optimize performance
+     */
+    public function scopeWithLastLoginAt(Builder $query): Builder
+    {
+        return $query->addSelect([
+            'last_login_at' => Login::select('created_at')
+                ->whereColumn('user_id', 'users.id')
+                ->orderByDesc('created_at')
+                ->limit(1),
+        ])
+            ->withCasts([
+                'last_login_at' => 'datetime',
+            ]);
+    }
 }

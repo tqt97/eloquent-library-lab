@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Login;
 use App\Models\User;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
@@ -15,16 +14,10 @@ class UserController extends Controller
      */
     public function index(): View
     {
-        $users = User::query()->with('logins')
-            // ->addSelect([
-            //     'last_login_at' => Login::select('created_at')
-            //         ->whereColumn('user_id', 'users.id')
-            //         ->orderByDesc('created_at')
-            //         ->limit(1)
-            // ])
-            // ->withCasts([
-            //     'last_login_at' => 'datetime',
-            // ])
+
+        $users = User::query()
+            ->withLastLoginAt()
+            ->orderBy('first_name')
             ->paginate();
 
         return view('admin.users.index', compact('users'));
