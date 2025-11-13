@@ -32,7 +32,8 @@
                                                     <x-table.td value="{{ $user->first_name }}" />
                                                     <x-table.td value="{{ $user->last_name }}" />
                                                     <x-table.td value="{{ $user->email }}" />
-                                                    <x-table.td value="{{ $user->last_login_at?->diffForHumans() }}" />
+                                                    <x-table.td
+                                                        value="{{ $user->last_login_at ? $user->last_login_at->diffForHumans() : '-' }}" />
                                                     <x-table.td class="text-right">
                                                         <a href="" class="text-indigo-600 hover:text-indigo-900">Edit</a>
                                                     </x-table.td>
