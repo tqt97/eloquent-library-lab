@@ -29,4 +29,10 @@ class Review extends Model
     {
         return $this->morphTo();
     }
+
+    // App\Models\Review.php
+    public function getReviewableNameAttribute(): string
+    {
+        return class_basename($this->reviewable_type);
+    }
 }

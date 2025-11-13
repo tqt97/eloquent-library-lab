@@ -34,7 +34,7 @@
                                                         value="{{ $review->user->first_name ?? 'N/A'}}" />
                                                     <x-table.td>
                                                         @if ($review->reviewable)
-                                                            {{ class_basename($review->reviewable_type) }}:
+                                                            {{ $review->reviewable_name ?? 'N/A' }}:
                                                             <strong>
                                                                 {{ $review->reviewable->name ?? $review->reviewable->title ?? 'N/A' }}
                                                             </strong>
@@ -43,7 +43,10 @@
                                                         @endif
                                                         <p class="text-xs">{{ Str::limit($review->content, 80) }}</p>
                                                     </x-table.td>
-                                                    <x-table.td value="{{ $review->rating }}" class="text-center" />
+                                                    <x-table.td class="text-center">
+                                                        {{-- <p>{{ $review->rating }}</p> --}}
+                                                        <p>{{ $review->avg_rating}}/{{ $review->total_reviews }}</p>
+                                                    </x-table.td>
                                                     <x-table.td value="{{ $review->created_at ?? 'N/A' }}" />
                                                     <x-table.td class="text-right">
                                                         <a href="" class="text-indigo-600 hover:text-indigo-900">Edit</a>
