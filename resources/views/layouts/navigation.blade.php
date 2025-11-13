@@ -29,6 +29,10 @@
                         :active="request()->routeIs('admin.publishers*')">
                         {{ __('Publishers') }}
                     </x-nav-link>
+                     <x-nav-link :href="route('admin.reviews.index')"
+                        :active="request()->routeIs('admin.reviews*')">
+                        {{ __('Reviews') }}
+                    </x-nav-link>
                     <x-nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users*')">
                         {{ __('Users') }}
                     </x-nav-link>
