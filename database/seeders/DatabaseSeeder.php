@@ -26,17 +26,19 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        // User::factory()->create([
-        //     'name' => 'Admin',
-        //     'email' => 'admin@gmail.com',
-        //     'password' => Hash::make('12341234'),
-        // ]);
+        User::factory()->create([
+            'first_name' => 'Quoc',
+            'last_name' => 'Tuan',
+            'email' => 'admin@gmail.com',
+            'password' => Hash::make('12341234'),
+        ]);
 
-        // User::factory()->create([
-        //     'name' => 'User',
-        //     'email' => 'user@gmail.com',
-        //     'password' => Hash::make('12341234'),
-        // ]);
+        User::factory()->create([
+            'first_name' => 'User',
+            'last_name' => 'Test',
+            'email' => 'user@gmail.com',
+            'password' => Hash::make('12341234'),
+        ]);
 
         // User::factory(10)->create()->each(function ($user) {
         //     $user->logins()->saveMany(Login::factory(10)->make());
@@ -90,13 +92,19 @@ class DatabaseSeeder extends Seeder
         Borrowing::insert($borrowings->toArray());
 
         // Review (polymorphic)
-        $reviews = Review::factory(50)->make()->map(function ($review) use ($users, $books) {
-            $review->user_id = $users->random()->id;
-            $review->reviewable_id = $books->random()->id;
-            $review->reviewable_type = Book::class;
+        $reviews = Review::factory(200)->make()->map(function ($review) use ($users, $books) {
+            return [
+                'content' => $review->content,
+                'rating' => $review->rating,
+                'user_id' => $users->random()->id,
+                'reviewable_id' => $books->random()->id,
+                'reviewable_type' => Book::class,
+                'created_at' => now()->subDays(rand(1, 30))->format('Y-m-d H:i:s'),
+                'updated_at' => now()->subDays(rand(1, 30))->format('Y-m-d H:i:s'),
+            ];
+        })->toArray();
 
-            return $review->toArray();
-        });
-        Review::insert($reviews->toArray());
+        Review::insert($reviews);
+
     }
 }
