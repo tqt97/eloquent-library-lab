@@ -14,7 +14,7 @@ class PublisherController extends Controller
      */
     public function index(): View
     {
-        $publishers = Publisher::with('books')
+        $publishers = Publisher::select('id', 'name')
             ->withCount('books')
             ->paginate();
 
